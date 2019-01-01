@@ -2,10 +2,10 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 //requires the bot prefix and token from seperate files
-const botPrefix = require('./botprefix.json');
-const botToken = require('./bottoken.json');
+//const botPrefix = require('./botprefix.json');
+//const botToken = require('./bottoken.json');
 
-const xp = require('./xp.json');
+//const xp = require('./xp.json');
 
 //command handler
 client.commands = new Discord.Collection();
