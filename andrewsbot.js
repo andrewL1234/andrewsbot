@@ -1,5 +1,5 @@
-//const Discord = require('C:\\Users\\Fly\\node_modules\\discord.js');
-const Discord = require('discord.js');
+const Discord = require('C:\\Users\\Fly\\node_modules\\discord.js');
+//const Discord = require('discord.js');
 const client = new Discord.Client();
 //requires the bot prefix and token from seperate files
 const botPrefix = require('./botprefix.json');
