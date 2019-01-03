@@ -1,3 +1,5 @@
+const Discord = module.require('discord.js');
+
 function generateDiceResult(d, s) {
 	const min = 1;
 	const max = s;
@@ -9,9 +11,6 @@ function generateDiceResult(d, s) {
 		sum += result;
 		results.push(result);
 	}
-	// console.log(sum);
-	// console.log(results);
-	// console.log(sum, results);
 	return sum;
 }
 
@@ -38,7 +37,16 @@ function ballDice(d, s) {
 	}
 	return sum;
 }
-const Discord = module.require("C:\\Users\\Fly\\node_modules\\discord.js");
+
+function checkWithoutSides(diceRolled, maxDice, maxSides) {
+	if(isNaN(diceRolled)) return message.channel.send("Enter the amount of dice you want to roll after the command with a number");
+	if(diceRolled > maxDice) return message.channel.send(`The maximum amount of dice you can roll is ${maxDice}, and the max sides is ${maxSides}`);	
+}
+function checkWithSides(diceRolled, diceSides, maxDice, maxSides) {
+	if(isNaN(diceRolled) || isNaN(diceSides)) return message.channel.send("Enter the amount of dice and sides you want to roll after the command with a number");
+	if(diceRolled > maxDice || diceSides > maxSides) return message.channel.send(`The maximum amount of dice you can roll is ${maxDice}, and the max sides is ${maxSides}`);
+	if(diceSides <= 3) return message.channel.send("There has to be at least 4 sides in the dice");
+}
 module.exports.run = (client, message, args) => {
 	const maxDice = 500;
 	const maxSides = 100;
@@ -60,8 +68,7 @@ module.exports.run = (client, message, args) => {
 		}
 		//amount of dice
 		const numDiceRolled = Number(args[0]);
-		if(isNaN(numDiceRolled)) return message.channel.send("Enter the amount of dice you want to roll after the command with a number");
-		if(numDiceRolled > maxDice) return message.channel.send(`The maximum amount of dice you can roll is ${maxDice}, and the max sides is ${maxSides}`);
+		checkWithoutSides(numDiceRolled, maxDice, maxSides);
 		return message.channel.send(`**Result:** ${generateDiceResult(numDiceRolled, defaultSides)}`);
 	}
 	else if(args.length === 2) {
@@ -70,9 +77,7 @@ module.exports.run = (client, message, args) => {
 		if(args[1].match(/[a-z]/) === null) {
 			const numDiceRolled = Number(args[0]);
 			const sides = Number(args[1]);
-			if(isNaN(numDiceRolled) || isNaN(sides)) return message.channel.send("Enter the amount of dice and sides you want to roll after the command with a number");
-			if(numDiceRolled > maxDice || sides > maxSides) return message.channel.send(`The maximum amount of dice you can roll is ${maxDice}, and the max sides is ${maxSides}`);
-			if(sides <= 3) return message.channel.send("There has to be at least 4 sides in the dice");
+			checkWithSides(numDiceRolled, sides, maxDice, maxSides);
 			return message.channel.send(`**Result:** ${generateDiceResult(numDiceRolled, defaultSides)}`);
 		} 
 		//amount of dice and modifier
@@ -84,13 +89,11 @@ module.exports.run = (client, message, args) => {
 				if(!message.member.hasPermission("MANAGE_GUILD")) {
 					return message.channel.send("Only the owner of this server can use this modifier!");
 				}
-				if(isNaN(numDiceRolled)) return message.channel.send("Enter the amount of dice you want to roll after the command with a number");
-				if(numDiceRolled > maxDice) return message.channel.send(`The maximum amount of dice you can roll is ${maxDice}, and the max sides is ${maxSides}`);
+				checkWithoutSides(numDiceRolled, maxDice, maxSides);
 				return message.channel.send(`**Result:** ${serverOwnerHackedDice(numDiceRolled, defaultSides)}`);
 			} 
 			else if(modifier === "b"){
-				if(isNaN(numDiceRolled)) return message.channel.send("Enter the amount of dice you want to roll after the command with a number");
-				if(numDiceRolled > maxDice) return message.channel.send(`The maximum amount of dice you can roll is ${maxDice}, and the max sides is ${maxSides}`);
+				checkWithoutSides(numDiceRolled, maxDice, maxSides);
 				return message.channel.send(`**Result:** ${ballDice(numDiceRolled, defaultSides)}`);
 			} else {
 				return message.channel.send("That is not an available modifier");
@@ -100,22 +103,18 @@ module.exports.run = (client, message, args) => {
 		}
 	}
 	else if(args.length === 3) {
-		let modifier = args[2];
+		const numDiceRolled = Number(args[0]);
+		const sides = Number(args[1]);
+		const modifier = args[2];
 		//amount of dice, sides, and modifier
 		if(modifier === "o") {
 			if(!message.member.hasPermission("MANAGE_GUILD")) {
 				return message.channel.send("Only the owner of this server can use this modifier!");
 			}
-			const numDiceRolled = Number(args[0]);
-			const sides = Number(args[1]);
-			if(isNaN(numDiceRolled) || isNaN(sides)) return message.channel.send("Enter the amount of dice and sides you want to roll after the command with a number");
-			if(numDiceRolled > maxDice || sides > maxSides) return message.channel.send(`The maximum amount of dice you can roll is ${maxDice}, and the max sides is ${maxSides}`);
-			if(sides <= 3) return message.channel.send("There has to be at least 4 sides in the dice");
+			checkWithSides(numDiceRolled, sides, maxDice, maxSides);
 			return message.channel.send(serverOwnerHackedDice(numDiceRolled, sides));
 		} else if(modifier === "b"){
-			if(isNaN(numDiceRolled) || isNaN(sides)) return message.channel.send("Enter the amount of dice and sides you want to roll after the command with a number");
-			if(numDiceRolled > maxDice || sides > maxSides) return message.channel.send(`The maximum amount of dice you can roll is ${maxDice}, and the max sides is ${maxSides}`);
-			if(sides <= 3) return message.channel.send("There has to be at least 4 sides in the dice");
+			checkWithSides(numDiceRolled, sides, maxDice, maxSides);
 			return message.channel.send(ballDice(numDiceRolled, sides));
 		} else {
 			return message.channel.send("That is not an available modifier");
