@@ -1,4 +1,4 @@
-const Discord = module.require("C:\\Users\\Fly\\node_modules\\discord.js");
+const Discord = module.require('discord.js');
 const fs = module.require("fs");
 let jsfiles;
 const cmdDescriptions = {
