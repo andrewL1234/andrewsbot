@@ -14,7 +14,7 @@ client.on('ready', () => {
 
 client.on('message', message => {
 
-    if (message.content === '~rng') {
+    if (message.content === 'random') {
 
         const minimum = Number(args[0]);
         const maximum = Number(args[1]);
