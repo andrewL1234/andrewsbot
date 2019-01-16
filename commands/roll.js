@@ -39,13 +39,13 @@ function ballDice(d, s) {
 }
 
 function checkWithoutSides(diceRolled, maxDice, maxSides) {
-	if(isNaN(diceRolled)) return message.channel.send("Enter the amount of dice you want to roll after the command with a number");
-	if(diceRolled > maxDice) return message.channel.send(`The maximum amount of dice you can roll is ${maxDice}, and the max sides is ${maxSides}`);	
+	if(isNaN(diceRolled)) return "Enter the amount of dice you want to roll after the command with a number";
+	if(diceRolled > maxDice) return `The maximum amount of dice you can roll is ${maxDice}, and the max sides is ${maxSides}`;	
 }
 function checkWithSides(diceRolled, diceSides, maxDice, maxSides) {
-	if(isNaN(diceRolled) || isNaN(diceSides)) return message.channel.send("Enter the amount of dice and sides you want to roll after the command with a number");
-	if(diceRolled > maxDice || diceSides > maxSides) return message.channel.send(`The maximum amount of dice you can roll is ${maxDice}, and the max sides is ${maxSides}`);
-	if(diceSides <= 3) return message.channel.send("There has to be at least 4 sides in the dice");
+	if(isNaN(diceRolled) || isNaN(diceSides)) return "Enter the amount of dice and sides you want to roll after the command with a number";
+	if(diceRolled > maxDice || diceSides > maxSides) return `The maximum amount of dice you can roll is ${maxDice}, and the max sides is ${maxSides}`;
+	if(diceSides <= 3) return "There has to be at least 4 sides in the dice";
 }
 module.exports.run = (client, message, args) => {
 	const maxDice = 500;
@@ -67,8 +67,8 @@ module.exports.run = (client, message, args) => {
 			return message.channel.send(rollHelpEmbed);
 		}
 		//amount of dice
-		const numDiceRolled = Number(args[0]);
-		checkWithoutSides(numDiceRolled, maxDice, maxSides);
+		const numDiceRolled = Number(args[0]); 
+		if(checkWithoutSides(numDiceRolled, maxDice, maxSides) != undefined) checkWithoutSides(numDiceRolled, maxDice, maxSides);
 		return message.channel.send(`**Result:** ${generateDiceResult(numDiceRolled, defaultSides)}`);
 	}
 	else if(args.length === 2) {
@@ -77,7 +77,7 @@ module.exports.run = (client, message, args) => {
 		if(args[1].match(/[a-z]/) === null) {
 			const numDiceRolled = Number(args[0]);
 			const sides = Number(args[1]);
-			checkWithSides(numDiceRolled, sides, maxDice, maxSides);
+			if(checkWithSides(numDiceRolled, maxDice, maxSides) != undefined) checkWithSides(numDiceRolled, maxDice, maxSides);
 			return message.channel.send(`**Result:** ${generateDiceResult(numDiceRolled, defaultSides)}`);
 		} 
 		//amount of dice and modifier
@@ -89,11 +89,11 @@ module.exports.run = (client, message, args) => {
 				if(!message.member.hasPermission("MANAGE_GUILD")) {
 					return message.channel.send("Only the owner of this server can use this modifier!");
 				}
-				checkWithoutSides(numDiceRolled, maxDice, maxSides);
+				if(checkWithoutSides(numDiceRolled, maxDice, maxSides) != undefined) checkWithoutSides(numDiceRolled, maxDice, maxSides);
 				return message.channel.send(`**Result:** ${serverOwnerHackedDice(numDiceRolled, defaultSides)}`);
 			} 
 			else if(modifier === "b"){
-				checkWithoutSides(numDiceRolled, maxDice, maxSides);
+				if(checkWithoutSides(numDiceRolled, maxDice, maxSides) != undefined) checkWithoutSides(numDiceRolled, maxDice, maxSides);
 				return message.channel.send(`**Result:** ${ballDice(numDiceRolled, defaultSides)}`);
 			} else {
 				return message.channel.send("That is not an available modifier");
@@ -111,10 +111,10 @@ module.exports.run = (client, message, args) => {
 			if(!message.member.hasPermission("MANAGE_GUILD")) {
 				return message.channel.send("Only the owner of this server can use this modifier!");
 			}
-			checkWithSides(numDiceRolled, sides, maxDice, maxSides);
+			if(checkWithSides(numDiceRolled, maxDice, maxSides) != undefined) checkWithSides(numDiceRolled, maxDice, maxSides);
 			return message.channel.send(serverOwnerHackedDice(numDiceRolled, sides));
 		} else if(modifier === "b"){
-			checkWithSides(numDiceRolled, sides, maxDice, maxSides);
+			if(checkWithSides(numDiceRolled, maxDice, maxSides) != undefined) checkWithSides(numDiceRolled, maxDice, maxSides);
 			return message.channel.send(ballDice(numDiceRolled, sides));
 		} else {
 			return message.channel.send("That is not an available modifier");
