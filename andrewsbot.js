@@ -13,9 +13,9 @@ client.on('ready', () => {
  
 
 client.on('message', message => {
-
+    const args = message.split(' ').split(1);
     if (message.content === 'random') {
-
+        
         const minimum = Number(args[0]);
         const maximum = Number(args[1]);
         if(args.length !== 2) {
