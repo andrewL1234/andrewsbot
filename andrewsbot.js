@@ -16,12 +16,12 @@ client.on('message', message => {
     const args = message.split(' ').split(1);
     if (message.content === 'random') {
         
-        const minimum = Number(args[0]);
-        const maximum = Number(args[1]);
         if(args.length !== 2) {
             return message.channel.send("Please enter TWO numbers after the command.");
 
         }
+        const minimum = Number(args[0]);
+        const maximum = Number(args[1]);
         else if(isNaN(minimum) || isNaN(maximum)) {
             return message.channel.send("Please enter two NUMBERS after the command.");
 
