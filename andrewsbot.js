@@ -13,8 +13,10 @@ client.on('ready', () => {
  
 
 client.on('message', message => {
-    const args = message.split(' ').slice(1);
-    if (message.content === 'random') {
+    const commandArray = message.split(' ');
+    const command = commandArray[0];
+    const args = commandArray.slice(1);
+    if (command === 'random') {
         
         if(args.length !== 2) {
             return message.channel.send("Please enter TWO numbers after the command.");
@@ -34,7 +36,7 @@ client.on('message', message => {
             message.channel.send(randomNumber);
         }
     } 
-    else if(message.content === 'ping') {
+    else if(command === 'ping') {
         return message.reply('pong');
     }
     
