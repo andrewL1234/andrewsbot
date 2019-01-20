@@ -13,7 +13,7 @@ client.on('ready', () => {
  
 
 client.on('message', message => {
-    const args = message.split(' ').split(1);
+    const args = message.split(' ').slice(1);
     if (message.content === 'random') {
         
         if(args.length !== 2) {
