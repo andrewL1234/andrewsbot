@@ -77,7 +77,7 @@ module.exports.run = (client, message, args) => {
 		if(args[1].match(/[a-z]/) === null) {
 			const numDiceRolled = Number(args[0]);
 			const sides = Number(args[1]);
-			if(checkWithSides(numDiceRolled, maxDice, maxSides) != undefined) checkWithSides(numDiceRolled, maxDice, maxSides);
+			if(checkWithSides(numDiceRolled, sides, maxDice, maxSides) != undefined) checkWithSides(numDiceRolled, sides, maxDice, maxSides);
 			return message.channel.send(`**Result:** ${generateDiceResult(numDiceRolled, defaultSides)}`);
 		} 
 		//amount of dice and modifier
@@ -111,10 +111,10 @@ module.exports.run = (client, message, args) => {
 			if(!message.member.hasPermission("MANAGE_GUILD")) {
 				return message.channel.send("Only the owner of this server can use this modifier!");
 			}
-			if(checkWithSides(numDiceRolled, maxDice, maxSides) != undefined) checkWithSides(numDiceRolled, maxDice, maxSides);
+			if(checkWithSides(numDiceRolled, sides, maxDice, maxSides) != undefined) checkWithSides(numDiceRolled, sides, maxDice, maxSides);
 			return message.channel.send(serverOwnerHackedDice(numDiceRolled, sides));
 		} else if(modifier === "b"){
-			if(checkWithSides(numDiceRolled, maxDice, maxSides) != undefined) checkWithSides(numDiceRolled, maxDice, maxSides);
+			if(checkWithSides(numDiceRolled, sides, maxDice, maxSides) != undefined) checkWithSides(numDiceRolled, sides, maxDice, maxSides);
 			return message.channel.send(ballDice(numDiceRolled, sides));
 		} else {
 			return message.channel.send("That is not an available modifier");
