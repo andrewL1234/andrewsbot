@@ -22,8 +22,8 @@ client.on('message', message => {
                return message.channel.send("Please enter TWO numbers after the command.");
 
            }
-           const minimum = Number(args[0]);
-           const maximum = Number(args[1]);
+           const minimum = parseInt(args[0], 10);
+           const maximum = parseInt(args[1], 10);
            else if(isNaN(minimum) || isNaN(maximum)) {
                return message.channel.send("Please enter two NUMBERS after the command.");
 
