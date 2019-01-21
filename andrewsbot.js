@@ -13,7 +13,7 @@ client.on('ready', () => {
  
 
 client.on('message', message => {
-       const commandArray = message.split(' ');
+       const commandArray = message.content.split(' ');
        const command = commandArray[0];
 //     const args = commandArray.slice(1);
 //     if (command === 'random') {
