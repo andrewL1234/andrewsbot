@@ -1,7 +1,7 @@
 {
   "name": "andrewsbot",
   "description": "Discord bot",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "andrewsbot.js",
   "scripts": {
     "start": "node andrewsbot.js"
